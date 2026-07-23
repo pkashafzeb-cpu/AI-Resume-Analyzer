@@ -2,8 +2,6 @@
 
 An AI-powered resume analysis tool designed to provide professional feedback, identify resume weaknesses, and suggest actionable improvements using the Google Gemini API.
 
-> **Current status:** The command-line prototype can analyze sample resume text and generate structured feedback. PDF upload, ATS scoring, job matching, and the web interface are under development.
-
 ---
 
 ## 📌 Project Overview
@@ -89,14 +87,39 @@ This project is part of my AI learning journey and demonstrates practical experi
 
 ### 🔜 Day 3 — Prompt Engineering and Streamlit
 
+### ✅ Day 3 — Prompt Engineering Experiments
+
+**Achievements:**
+- Built an interactive **Streamlit Prompt Playground**
+- Implemented **three prompt-engineering techniques**:
+  - Zero-shot prompting
+  - Role + Structured prompting
+  - Few-shot prompting
+- Added editable prompt area for custom experimentation
+- Added token usage tracking
+- Ran controlled experiments comparing all three techniques
+- Documented findings in `prompt_experiments.md`
+- Selected **Role + Structured Prompting** as the winning technique
+
+**Experiment Results:**
+
+| Technique | Format Quality | Content Quality | Tokens Used | Verdict |
+|---|---|---|---|---|
+| Zero-shot | Moderate | Inconsistent | 993 | Fast but unreliable |
+| Role + Structured | Excellent | Excellent | 1,205 | ⭐ **Winner** |
+| Few-shot | Perfect | Less detailed | 812 | Consistent but shallow |
+
+**Key Finding:** Adding a professional role ("You are an expert recruiter...") combined with structured output requirements produced the most detailed, honest, and actionable feedback. Structure alone (Few-shot) was not enough — content quality matters more.
+
+### 🔜 Day 4 — PDF Upload and Real Resume Analysis (Coming Next)
+
 Planned tasks:
 
-- Learn zero-shot prompting
-- Learn few-shot prompting
-- Use role and system instructions
-- Add clear prompt constraints
-- Compare multiple resume-analysis prompts
-- Build an interactive Streamlit Prompt Playground
+- Add PDF file upload support
+- Integrate `pdfplumber` for text extraction
+- Handle scanned and non-standard PDFs
+- Build a production-ready analyzer UI
+- Apply Role + Structured prompting (winning technique)
 
 ---
 
