@@ -31,11 +31,11 @@ This project is part of my AI learning journey and demonstrates practical experi
 | Category | Technology |
 |---|---|
 | Programming language | Python 3.12 |
-| AI model | Google Gemini |
+| AI model | Google Gemini 2.5 Flash |
 | SDK | `google-genai` |
 | Environment variables | `python-dotenv` |
-| PDF processing | `pdfplumber` — planned |
-| Web interface | Streamlit — planned |
+| PDF processing | `pdfplumber` |
+| Web interface | Streamlit |
 | Version control | Git and GitHub |
 
 ---
@@ -44,18 +44,21 @@ This project is part of my AI learning journey and demonstrates practical experi
 
 - [x] Gemini API integration
 - [x] Command-line resume analysis
+- [x] Streamlit prompt playground
+- [x] Multiple prompt-engineering techniques
 - [x] Structured resume feedback
 - [x] Identification of strengths and weaknesses
 - [x] ATS-friendly recommendations
 - [x] Secure API-key management using `.env`
 - [x] Fictional sample resume for safe testing
-- [ ] PDF resume upload
-- [ ] PDF text extraction
+- [x] PDF resume upload
+- [x] PDF text extraction using pdfplumber
+- [x] Streamlit web application
+- [x] Token usage tracking
 - [ ] Structured JSON response
 - [ ] ATS compatibility scoring
 - [ ] Skills-gap analysis
 - [ ] Resume and job-description comparison
-- [ ] Streamlit web application
 - [ ] Downloadable PDF analysis report
 - [ ] Cloud deployment
 
@@ -85,8 +88,6 @@ This project is part of my AI learning journey and demonstrates practical experi
 - Protected the Gemini API key using `.env`
 - Added API error handling
 
-### 🔜 Day 3 — Prompt Engineering and Streamlit
-
 ### ✅ Day 3 — Prompt Engineering Experiments
 
 **Achievements:**
@@ -111,39 +112,76 @@ This project is part of my AI learning journey and demonstrates practical experi
 
 **Key Finding:** Adding a professional role ("You are an expert recruiter...") combined with structured output requirements produced the most detailed, honest, and actionable feedback. Structure alone (Few-shot) was not enough — content quality matters more.
 
-### 🔜 Day 4 — PDF Upload and Real Resume Analysis (Coming Next)
+### ✅ Day 4 — PDF Upload and Real Resume Analysis
+
+**Achievements:**
+- Built a **production-ready Streamlit application** (`resume_analyzer.py`)
+- Integrated **PDF file upload** using `st.file_uploader`
+- Implemented **PDF text extraction** using `pdfplumber`
+- Applied **Role + Structured prompting** (Day 3 winner) for analysis
+- Added **automatic retry logic** for temporary API errors (503, 429)
+- Implemented **error handling** for invalid or scanned PDFs
+- Added **token usage metrics** display
+- Created **professional UI** with sidebar, file details, and celebration animations
+
+**Application Flow:**
+
+```text
+User uploads PDF resume
+        ↓
+pdfplumber extracts text
+        ↓
+Text sent to Gemini with Role + Structured prompt
+        ↓
+AI generates comprehensive analysis
+        ↓
+Results displayed with token metrics
+```
+
+**Key Features:**
+- Real-time PDF processing with visual feedback
+- Automatic retry on temporary API errors
+- Expandable extracted text preview
+- Professional sidebar with usage instructions
+- Token usage transparency
+- Success celebrations with balloon animations
+
+### 🔜 Day 5 — UI Polish and Enhanced Features (Coming Next)
 
 Planned tasks:
 
-- Add PDF file upload support
-- Integrate `pdfplumber` for text extraction
-- Handle scanned and non-standard PDFs
-- Build a production-ready analyzer UI
-- Apply Role + Structured prompting (winning technique)
+- Enhance visual design and layout
+- Add skills-gap analysis feature
+- Implement structured JSON output
+- Add sample resume for quick demo
+- Improve error messages
+- Add loading progress indicators
 
 ---
 
 ## 🧠 How the Current Version Works
 
 ```text
-Fictional or anonymized resume text
+User uploads PDF resume via Streamlit
                   ↓
-        Resume-analysis prompt
+        pdfplumber extracts text
                   ↓
-            Gemini API
+   Text sent to Gemini with Role + Structured prompt
                   ↓
-     AI-generated resume feedback
+     Gemini 2.5 Flash generates analysis
                   ↓
-        Displayed in the terminal
+   Formatted results displayed in web UI
+                  ↓
+        Token usage metrics shown
 ```
 
-The current application sends resume text to Gemini and requests feedback using clearly defined sections.
+The application accepts PDF resume uploads, extracts text automatically, sends it to Gemini using the Role + Structured prompt technique (proven best in Day 3 experiments), and displays comprehensive analysis in a professional web interface.
 
 ---
 
 ## 📋 Current Analysis Sections
 
-The command-line application currently generates:
+The application generates feedback in these sections:
 
 1. **Overall Impression**
 2. **Key Strengths**
@@ -159,16 +197,19 @@ The command-line application currently generates:
 ```text
 AI-Resume-Analyzer/
 │
-├── .venv/                  # Local virtual environment
-├── .env                    # Private Gemini API key
-├── .env.example            # Safe environment-variable template
-├── .gitignore              # Files excluded from Git
-├── day2_llm_test.py        # Current resume-analysis script
-├── gemini_test.py          # Gemini API connection test
-├── day1_notes.md           # Day 1 learning notes
-├── day2_notes.md           # Day 2 learning notes
-├── requirements.txt        # Python dependencies
-└── README.md               # Project documentation
+├── .venv/                        # Local virtual environment
+├── .env                          # Private Gemini API key
+├── .env.example                  # Safe environment-variable template
+├── .gitignore                    # Files excluded from Git
+├── day2_llm_test.py              # Day 2: Command-line prototype
+├── prompt_playground.py          # Day 3: Streamlit prompt playground
+├── prompt_experiments.md         # Day 3: Experiment results & findings
+├── resume_analyzer.py            # Day 4: Production application
+├── day1_notes.md                 # Day 1 learning notes
+├── day2_notes.md                 # Day 2 learning notes
+├── day4_notes.md                 # Day 4 learning notes
+├── requirements.txt              # Python dependencies
+└── README.md                     # Project documentation
 ```
 
 > `.venv/` and `.env` are stored locally and are not uploaded to GitHub.
@@ -216,33 +257,67 @@ Create a `.env` file in the project root:
 
 ```env
 GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-You can copy the included example file:
+Get your free API key at: [Google AI Studio](https://aistudio.google.com/apikey)
 
-```bash
-copy .env.example .env
-```
-
-Then replace the placeholder with your actual Gemini API key.
-
-### 6. Run the Gemini connection test
-
-```bash
-python gemini_test.py
-```
-
-### 7. Run the Resume Analyzer
+### 6. Run the command-line prototype
 
 ```bash
 python day2_llm_test.py
 ```
 
+### 7. Run the Prompt Playground
+
+```bash
+streamlit run prompt_playground.py
+```
+
+### 8. Run the Resume Analyzer (Main Application)
+
+```bash
+streamlit run resume_analyzer.py
+```
+
+Your browser will automatically open at `http://localhost:8501`
+
+---
+
+## 🧪 Prompt Engineering Techniques
+
+### 1. Zero-Shot Prompting
+
+Asks the AI to perform a task without any examples or specific role.
+
+**Pros:** Fast, simple, low token usage on input  
+**Cons:** Inconsistent quality, generic outputs, unreliable structure
+
+**Best for:** Quick prototypes and casual queries
+
+### 2. Role + Structured Prompting ⭐
+
+Assigns the AI a specific expert role AND specifies exact output structure.
+
+**Pros:** Detailed feedback, professional tone, actionable advice, honest assessment  
+**Cons:** Uses more output tokens
+
+**Best for:** Production applications where quality matters
+
+### 3. Few-Shot Prompting
+
+Provides an example of the ideal output before asking the AI to analyze.
+
+**Pros:** Extremely consistent format, follows exact structure  
+**Cons:** Less detailed content, higher input token cost
+
+**Best for:** Batch processing where format consistency is critical
+
 ---
 
 ## ⚙️ Generation Parameters
 
-The application experiments with two important LLM parameters.
+The application uses two important LLM parameters:
 
 ### Temperature
 
@@ -251,10 +326,10 @@ Temperature controls how varied or predictable the generated response is.
 | Temperature | Typical behavior |
 |---:|---|
 | `0.2` | More focused and consistent |
-| `0.7` | Balanced variation |
+| `0.7` | Balanced variation (recommended) |
 | `1.0` | More varied output |
 
-Resume analysis generally benefits from focused and consistent output. However, the final setting should be selected through testing.
+Resume analysis generally benefits from focused and consistent output. The current default is `0.7`.
 
 ### Maximum Output Tokens
 
@@ -265,21 +340,8 @@ The maximum output-token setting limits how long the generated response can be.
 | `300` | Short response; sections may be incomplete |
 | `700` | Moderate amount of feedback |
 | `1000` | Detailed resume analysis |
-| `1200+` | Longer response, possibly repetitive |
-
----
-
-## 🔬 Parameter Experiments
-
-| Temperature | Maximum output tokens | Observation |
-|---:|---:|---|
-| `0.2` | `800` | Add your observation |
-| `0.7` | `800` | Add your observation |
-| `1.0` | `800` | Add your observation |
-| `0.3` | `300` | Add your observation |
-| `0.3` | `1200` | Add your observation |
-
-These experiments help determine which configuration produces the most useful, accurate, and consistent resume feedback.
+| `1500` | Comprehensive analysis (recommended) |
+| `2000+` | Extensive response with examples |
 
 ---
 
@@ -300,53 +362,58 @@ This project follows the following security practices:
 
 ## 🗺️ Project Roadmap
 
-### Phase 1 — Foundation
+### ✅ Phase 1 — Foundation (Complete)
 
 - [x] Set up the Python project
 - [x] Configure Git and GitHub
 - [x] Integrate the Gemini API
 - [x] Build a command-line prototype
 
-### Phase 2 — Prompt Engineering
+### ✅ Phase 2 — Prompt Engineering (Complete)
 
-- [ ] Compare zero-shot and few-shot prompts
-- [ ] Improve system instructions
-- [ ] Add prompt constraints
+- [x] Build interactive Streamlit playground
+- [x] Compare zero-shot, role-structured, and few-shot prompts
+- [x] Improve system instructions
+- [x] Add prompt constraints
+- [x] Document experimental findings
+- [x] Select optimal prompt technique
 - [ ] Add structured JSON output
 - [ ] Validate the generated response
 
-### Phase 3 — Resume Processing
+### ✅ Phase 3 — Resume Processing (Complete)
 
-- [ ] Add PDF upload
-- [ ] Extract text using `pdfplumber`
-- [ ] Clean extracted resume text
-- [ ] Handle invalid or scanned PDF files
+- [x] Add PDF upload
+- [x] Extract text using `pdfplumber`
+- [x] Clean extracted resume text
+- [x] Handle invalid or scanned PDF files
+- [x] Add file details and size display
 
-### Phase 4 — Advanced Analysis
+### 🔜 Phase 4 — Advanced Analysis (In Progress)
 
-- [ ] Calculate ATS compatibility
+- [ ] Calculate ATS compatibility score
 - [ ] Detect missing resume sections
 - [ ] Compare a resume with a job description
 - [ ] Identify skills gaps
 - [ ] Generate role-specific recommendations
 
-### Phase 5 — Product and Deployment
+### 🔜 Phase 5 — Product and Deployment
 
-- [ ] Build a Streamlit interface
+- [x] Build a Streamlit interface
 - [ ] Add a downloadable report
 - [ ] Improve error handling
 - [ ] Add screenshots and an architecture diagram
-- [ ] Deploy the application
+- [ ] Deploy the application to Streamlit Community Cloud
 
 ---
 
 ## ⚠️ Current Limitations
 
-- The current version accepts text rather than uploaded PDF files
+- Scanned or image-based PDFs may not extract properly (text-based PDFs work best)
 - ATS scoring has not yet been implemented
 - The analysis depends on the quality of the supplied resume text
 - LLM feedback should be treated as guidance, not a hiring decision
-- The application is currently a learning prototype
+- Not yet deployed publicly (planned for Day 6)
+- No downloadable report yet (planned)
 
 ---
 
@@ -355,11 +422,14 @@ This project follows the following security practices:
 Through this project, I am learning how to:
 
 - Build applications powered by LLM APIs
-- Design and evaluate prompts
+- Design and evaluate prompts through controlled experimentation
+- Compare different prompt engineering techniques scientifically
 - Protect API keys and sensitive information
-- Handle temporary API errors
+- Handle temporary API errors and rate limits
+- Extract and process PDF documents in Python
+- Build interactive web applications with Streamlit
 - Organize a professional Python repository
-- Document project progress
+- Document project progress and findings
 - Convert an AI prototype into a deployable application
 
 ---
