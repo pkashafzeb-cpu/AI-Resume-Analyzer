@@ -25,6 +25,23 @@ This project is part of my AI learning journey and demonstrates practical experi
 - AI application deployment
 
 ---
+## 📸 Screenshots
+
+### Main Interface
+![Main Interface](screenshots/resume analyzer homepage.png)
+
+### Resume Analysis Result
+![Analysis Result](screenshots/analytic dashboard.png)
+![Analysis Result](screenshots/ats score.png)
+![Analysis Result](screenshots/ats score.png)
+
+
+### Skills Gap Analysis
+![Skills Gap](screenshots/general analyse.png)
+![Skills Gap](screenshots/job target.png)
+
+### History
+![Analyse History](screenshots/analys history.png)
 
 ## 🛠️ Technology Stack
 
