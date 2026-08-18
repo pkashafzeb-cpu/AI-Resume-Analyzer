@@ -25,6 +25,7 @@ This project is part of my AI learning journey and demonstrates practical experi
 - AI application deployment
 
 ---
+
 ## 📸 Screenshots
 
 ### Main Interface
@@ -33,8 +34,6 @@ This project is part of my AI learning journey and demonstrates practical experi
 ### Resume Analysis Result
 ![Analysis Result](screenshots/analytic dashboard.png)
 ![Analysis Result](screenshots/ats score.png)
-![Analysis Result](screenshots/ats score.png)
-
 
 ### Skills Gap Analysis
 ![Skills Gap](screenshots/general analyse.png)
@@ -43,17 +42,22 @@ This project is part of my AI learning journey and demonstrates practical experi
 ### History
 ![Analyse History](screenshots/analys history.png)
 
+---
+
 ## 🛠️ Technology Stack
 
-| Category | Technology |
-|---|---|
-| Programming language | Python 3.12 |
-| AI model | Google Gemini 2.5 Flash |
-| SDK | `google-genai` |
-| Environment variables | `python-dotenv` |
-| PDF processing | `pdfplumber` |
-| Web interface | Streamlit |
-| Version control | Git and GitHub |
+| Category              | Technology                          |
+|-----------------------|-------------------------------------|
+| Programming language  | Python 3.12                         |
+| AI model              | Google Gemini 2.5 Flash             |
+| SDK                   | `google-genai`                      |
+| Web interface         | Streamlit                           |
+| PDF processing        | `pdfplumber`                        |
+| DOCX processing       | `python-docx`                       |
+| PDF generation        | `reportlab`                         |
+| Data visualization    | `matplotlib` / `plotly`             |
+| Environment variables | `python-dotenv`                     |
+| Version control       | Git and GitHub                      |
 
 ---
 
@@ -68,15 +72,15 @@ This project is part of my AI learning journey and demonstrates practical experi
 - [x] ATS-friendly recommendations
 - [x] Secure API-key management using `.env`
 - [x] Fictional sample resume for safe testing
-- [x] PDF resume upload
-- [x] PDF text extraction using pdfplumber
+- [x] Multi-format upload (**PDF, DOCX, TXT**)
+- [x] PDF text extraction using `pdfplumber`
+- [x] Multi-format report download (**PDF, DOCX, TXT**)
+- [x] Analytics scoring with visual graphs
+- [x] Job-targeted analysis
+- [x] Skills-gap analysis
 - [x] Streamlit web application
 - [x] Token usage tracking
 - [ ] Structured JSON response
-- [ ] ATS compatibility scoring
-- [ ] Skills-gap analysis
-- [ ] Resume and job-description comparison
-- [ ] Downloadable PDF analysis report
 - [ ] Cloud deployment
 
 ---
@@ -141,58 +145,49 @@ This project is part of my AI learning journey and demonstrates practical experi
 - Added **token usage metrics** display
 - Created **professional UI** with sidebar, file details, and celebration animations
 
-**Application Flow:**
+### ✅ Day 5 — Feature Completion, Multi-Format Support & Analytics
 
-```text
-User uploads PDF resume
-        ↓
-pdfplumber extracts text
-        ↓
-Text sent to Gemini with Role + Structured prompt
-        ↓
-AI generates comprehensive analysis
-        ↓
-Results displayed with token metrics
-```
+**Achievements:**
+- Added support for uploading **PDF, DOCX, and TXT** resume formats
+- Added support for downloading analysis reports in **PDF, DOCX, and TXT** formats
+- Implemented **analytics scoring** with visual graphs and charts
+- Added **job-targeted resume analysis**
+- Added **skills-gap analysis** based on job description
+- Improved overall UI with professional styling and better user experience
+- Added session-state result preservation
+- Enhanced error handling and user feedback
 
-**Key Features:**
-- Real-time PDF processing with visual feedback
-- Automatic retry on temporary API errors
-- Expandable extracted text preview
-- Professional sidebar with usage instructions
-- Token usage transparency
-- Success celebrations with balloon animations
+**Key Features Added:**
+- Multi-format file support (upload & download)
+- Visual analytics and scoring
+- Skills gap visualization
+- Job-specific recommendations
 
-### 🔜 Day 5 — UI Polish and Enhanced Features (Coming Next)
+### 🔜 Day 6 — Deployment (Coming Next)
 
 Planned tasks:
 
-- Enhance visual design and layout
-- Add skills-gap analysis feature
-- Implement structured JSON output
-- Add sample resume for quick demo
-- Improve error messages
-- Add loading progress indicators
+- Add Groq as backup API
+- Deploy to Streamlit Community Cloud
+- Make the application publicly accessible
 
 ---
 
 ## 🧠 How the Current Version Works
 
 ```text
-User uploads PDF resume via Streamlit
+User uploads resume (PDF / DOCX / TXT)
                   ↓
-        pdfplumber extracts text
+        Text extraction (pdfplumber / python-docx)
                   ↓
    Text sent to Gemini with Role + Structured prompt
                   ↓
-     Gemini 2.5 Flash generates analysis
+     Gemini 3.5 Flash Lite generates analysis
                   ↓
-   Formatted results displayed in web UI
+   Formatted results + analytics displayed in web UI
                   ↓
-        Token usage metrics shown
-```
-
-The application accepts PDF resume uploads, extracts text automatically, sends it to Gemini using the Role + Structured prompt technique (proven best in Day 3 experiments), and displays comprehensive analysis in a professional web interface.
+        Report can be downloaded (PDF / DOCX / TXT)
+he application accepts resumes in multiple formats (PDF, DOCX, TXT), extracts text automatically, sends it to Gemini using the Role + Structured prompt technique (proven best in Day 3 experiments), and displays comprehensive analysis with analytics scoring and visual graphs in a professional web interface.
 
 ---
 
@@ -206,6 +201,8 @@ The application generates feedback in these sections:
 4. **Skills Identified**
 5. **Recommended Improvements**
 6. **ATS-Friendly Suggestions**
+7. **Analytics Score & Graphs**
+
 
 ---
 
@@ -221,13 +218,14 @@ AI-Resume-Analyzer/
 ├── day2_llm_test.py              # Day 2: Command-line prototype
 ├── prompt_playground.py          # Day 3: Streamlit prompt playground
 ├── prompt_experiments.md         # Day 3: Experiment results & findings
-├── resume_analyzer.py            # Day 4: Production application
+├── resume_analyzer.py            # Day 5: Main application
 ├── day1_notes.md                 # Day 1 learning notes
 ├── day2_notes.md                 # Day 2 learning notes
-├── day4_notes.md                 # Day 4 learning notes
+├── day5_notes.md                 # Day 5 learning notes
 ├── requirements.txt              # Python dependencies
 └── README.md                     # Project documentation
 ```
+
 
 > `.venv/` and `.env` are stored locally and are not uploaded to GitHub.
 
@@ -274,29 +272,16 @@ Create a `.env` file in the project root:
 
 ```env
 GEMINI_API_KEY=your_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 
 Get your free API key at: [Google AI Studio](https://aistudio.google.com/apikey)
 
-### 6. Run the command-line prototype
-
-```bash
-python day2_llm_test.py
-```
-
-### 7. Run the Prompt Playground
-
-```bash
-streamlit run prompt_playground.py
-```
-
-### 8. Run the Resume Analyzer (Main Application)
+### 6. Run the Resume Analyzer (Main Application)
 
 ```bash
 streamlit run resume_analyzer.py
 ```
-
 Your browser will automatically open at `http://localhost:8501`
 
 ---
@@ -394,29 +379,30 @@ This project follows the following security practices:
 - [x] Add prompt constraints
 - [x] Document experimental findings
 - [x] Select optimal prompt technique
-- [ ] Add structured JSON output
-- [ ] Validate the generated response
+- [X] Add structured JSON output
+- [X] Validate the generated response
 
 ### ✅ Phase 3 — Resume Processing (Complete)
 
-- [x] Add PDF upload
-- [x] Extract text using `pdfplumber`
+- [x] Add multi-format upload (PDF, DOCX, TXT)
+- [x] Extract text using pdfplumber and python-docx
 - [x] Clean extracted resume text
 - [x] Handle invalid or scanned PDF files
 - [x] Add file details and size display
 
-### 🔜 Phase 4 — Advanced Analysis (In Progress)
+### ✅ Phase 4 — Advanced Analysis (In Progress)
 
-- [ ] Calculate ATS compatibility score
-- [ ] Detect missing resume sections
-- [ ] Compare a resume with a job description
-- [ ] Identify skills gaps
-- [ ] Generate role-specific recommendations
+- [X] Add analytics scoring and visual graphs
+- [X] Add job-targeted analysis and skills-gap analysis
+- [X] Compare a resume with a job description
+- [X] Identify skills gaps
+- [X] Generate role-specific recommendations
 
 ### 🔜 Phase 5 — Product and Deployment
 
 - [x] Build a Streamlit interface
-- [ ] Add a downloadable report
+- [X] Add a downloadable PDF report
+- [ ] Add Groq as backup API
 - [ ] Improve error handling
 - [ ] Add screenshots and an architecture diagram
 - [ ] Deploy the application to Streamlit Community Cloud
@@ -426,12 +412,10 @@ This project follows the following security practices:
 ## ⚠️ Current Limitations
 
 - Scanned or image-based PDFs may not extract properly (text-based PDFs work best)
-- ATS scoring has not yet been implemented
+- ATS scoring is visual but not yet calculated as a numeric score
 - The analysis depends on the quality of the supplied resume text
 - LLM feedback should be treated as guidance, not a hiring decision
 - Not yet deployed publicly (planned for Day 6)
-- No downloadable report yet (planned)
-
 ---
 
 ## 🎯 Learning Outcomes
@@ -445,6 +429,7 @@ Through this project, I am learning how to:
 - Handle temporary API errors and rate limits
 - Extract and process PDF documents in Python
 - Build interactive web applications with Streamlit
+- Implement analytics scoring and data visualization
 - Organize a professional Python repository
 - Document project progress and findings
 - Convert an AI prototype into a deployable application
